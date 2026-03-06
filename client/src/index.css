@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ── CSS Custom Properties ───────────────────────────────────── */
+:root {
+  --font-display: "Syne", sans-serif;
+  --font-body: "Lato", sans-serif;
+
+  /* Color palette: deep navy base, warm amber accent */
+  --bg-base: #090e1a;
+  --bg-surface: #0f1829;
+  --bg-glass: rgba(15, 24, 41, 0.7);
+  --bg-user: #1a3a5c;
+  --bg-bot: #131e30;
+  --border: rgba(255, 255, 255, 0.07);
+  --accent: #f0a500;
+  --accent-glow: rgba(240, 165, 0, 0.25);
+  --text-primary: #e8edf5;
+  --text-secondary: #6b7fa3;
+  --text-muted: #3d4f6b;
+  --online: #22c55e;
+  --error: #f87171;
+}
+
+/* ── Base Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 4px; }
+
+/* ── Message Fade-in Animation ───────────────────────────────── */
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-enter {
+  animation: messageIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Typing Dots Animation ───────────────────────────────────── */
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-6px); opacity: 1; }
+}
+
+.dot-1 { animation: dotBounce 1.2s infinite ease-in-out 0s; }
+.dot-2 { animation: dotBounce 1.2s infinite ease-in-out 0.2s; }
+.dot-3 { animation: dotBounce 1.2s infinite ease-in-out 0.4s; }
+
+/* ── Gradient background mesh ────────────────────────────────── */
+.bg-mesh {
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(240, 165, 0, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(56, 100, 180, 0.07) 0%, transparent 70%);
+}
+
+/* ── Glassmorphism card ───────────────────────────────────────── */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+}
+
+/* ── Markdown inside messages ─────────────────────────────────── */
+.message-content p { margin-bottom: 0.5em; }
+.message-content p:last-child { margin-bottom: 0; }
+.message-content code {
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.82em;
+  background: rgba(0,0,0,0.35);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: #f0c060;
+}
+.message-content pre {
+  background: rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75em 1em;
+  overflow-x: auto;
+  margin: 0.5em 0;
+}
+.message-content pre code {
+  background: transparent;
+  padding: 0;
+  color: #a8c4e0;
+}
+.message-content ul, .message-content ol {
+  padding-left: 1.4em;
+  margin: 0.4em 0;
+}
+.message-content li { margin-bottom: 0.2em; }
+.message-content strong { color: #c8d8f0; font-weight: 700; }
+.message-content em { color: #9ab0cc; }
+
+/* ── Textarea auto-resize ─────────────────────────────────────── */
+textarea {
+  field-sizing: content;
+  min-height: 24px;
+  max-height: 160px;
+  resize: none;
+}
+
+/* ── Send button pulse on hover ──────────────────────────────── */
+@keyframes btnGlow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 12px 4px var(--accent-glow); }
+}
+
+.send-btn:not(:disabled):hover {
+  animation: btnGlow 1.5s ease infinite;
+}
+
+/* ── Status dot pulse ─────────────────────────────────────────── */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.status-dot {
+  animation: statusPulse 2s ease-in-out infinite;
+}
